@@ -12,12 +12,19 @@
 //!
 
 /// The empty type for cases which can't occur.
+#[derive(Copy)]
 pub enum Void { }
+
+impl Clone for Void {
+    fn clone(&self) -> Void {
+        unreachable(*self)
+    }
+}
 
 /// A safe version of `intrinsincs::unreachable`. If this typechecks, anything
 /// that causes this to run is unreachable code.
 #[inline(always)]
-pub fn unreachable(_: Void) {
+pub fn unreachable<T = ()>(_: Void) -> T {
     use std::intrinsics;
     unsafe { intrinsics::unreachable() }
 }
@@ -34,7 +41,10 @@ impl<T> VoidExtensions<T> for Result<T, Void> {
     /// Never panics, since it is statically known to be Ok.
     #[inline]
     fn void_unwrap(self) -> T {
-        self.map_err(unreachable).unwrap()
+        match self {
+            Ok(val) => val,
+            Err(e) => unreachable(e)
+        }
     }
 }
 
@@ -50,7 +60,10 @@ impl<E> ErrVoidExtensions<E> for Result<Void, E> {
     /// Never panics, since it is statically known to be Err.
     #[inline]
     fn void_unwrap_err(self) -> E {
-        self.map(unreachable).unwrap_err()
+        match self {
+            Ok(v) => unreachable(v),
+            Err(e) => e
+        }
     }
 }
 
