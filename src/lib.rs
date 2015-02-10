@@ -11,7 +11,7 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
-use std::{fmt, ops, cmp};
+use std::{fmt, cmp};
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
