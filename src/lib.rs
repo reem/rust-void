@@ -11,12 +11,38 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
+use std::{fmt, ops, cmp};
+
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
 pub enum Void { }
 
 impl Clone for Void {
     fn clone(&self) -> Void {
+        unreachable(*self)
+    }
+}
+
+impl fmt::Debug for Void {
+    fn fmt(&self, _: &mut fmt::Formatter) -> fmt::Result {
+        unreachable(*self)
+    }
+}
+
+impl fmt::Display for Void {
+    fn fmt(&self, _: &mut fmt::Formatter) -> fmt::Result {
+        unreachable(*self)
+    }
+}
+
+impl<T> cmp::PartialEq<T> for Void {
+    fn eq(&self, _: &T) -> bool {
+        unreachable(*self)
+    }
+}
+
+impl<T> cmp::PartialOrd<T> for Void {
+    fn partial_cmp(&self, _: &T) -> Option<cmp::Ordering> {
         unreachable(*self)
     }
 }
