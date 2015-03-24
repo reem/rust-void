@@ -56,12 +56,12 @@ pub fn unreachable<T = ()>(_: Void) -> T {
 }
 
 /// Extensions to `Result<T, Void>`
-pub trait VoidExtensions<T>: Sized {
+pub trait ResultVoidExt<T>: Sized {
     /// Get the value out of a wrapper.
     fn void_unwrap(self) -> T;
 }
 
-impl<T> VoidExtensions<T> for Result<T, Void> {
+impl<T> ResultVoidExt<T> for Result<T, Void> {
     /// Get the value out of an always-ok Result.
     ///
     /// Never panics, since it is statically known to be Ok.
@@ -75,12 +75,12 @@ impl<T> VoidExtensions<T> for Result<T, Void> {
 }
 
 /// Extensions to `Result<Void, E>`
-pub trait ErrVoidExtensions<E>: Sized {
+pub trait ResultVoidErrExt<E>: Sized {
     /// Get the error out of a wrapper.
     fn void_unwrap_err(self) -> E;
 }
 
-impl<E> ErrVoidExtensions<E> for Result<Void, E> {
+impl<E> ResultVoidErrExt<E> for Result<Void, E> {
     /// Get the error out of an always-err Result.
     ///
     /// Never panics, since it is statically known to be Err.
