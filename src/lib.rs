@@ -1,4 +1,3 @@
-#![feature(core)]
 #![cfg_attr(test, deny(warnings))]
 #![deny(missing_docs)]
 
@@ -47,12 +46,16 @@ impl<T> cmp::PartialOrd<T> for Void {
     }
 }
 
-/// A safe version of `intrinsincs::unreachable`. If this typechecks, anything
-/// that causes this to run is unreachable code.
+/// A safe version of `intrinsincs::unreachable`.
+///
+/// If this typechecks, anything that causes this to run is unreachable code.
+///
+/// Calling this function in reachable code invokes undefined behavior, but
+/// should not be possible unless `unsafe` was used elsewhere to construct
+/// an instance of `Void` (which is already undefined behavior).
 #[inline(always)]
-pub fn unreachable<T = ()>(_: Void) -> T {
-    use std::intrinsics;
-    unsafe { intrinsics::unreachable() }
+pub fn unreachable(x: Void) -> ! {
+    match x {}
 }
 
 /// Extensions to `Result<T, Void>`
