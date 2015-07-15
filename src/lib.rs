@@ -10,7 +10,7 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
-use std::{fmt, cmp};
+use std::{fmt, cmp, error};
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
@@ -42,6 +42,16 @@ impl<T> cmp::PartialEq<T> for Void {
 
 impl<T> cmp::PartialOrd<T> for Void {
     fn partial_cmp(&self, _: &T) -> Option<cmp::Ordering> {
+        unreachable(*self)
+    }
+}
+
+impl error::Error for Void {
+    fn description(&self) -> &str {
+        unreachable(*self)
+    }
+
+    fn cause(&self) -> Option<&error::Error> {
         unreachable(*self)
     }
 }
