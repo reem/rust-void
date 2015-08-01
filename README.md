@@ -22,6 +22,13 @@ with the rest of your dependencies:
 void = "*"
 ```
 
+Then, use `Void` in your crate:
+
+```rust
+extern crate void;
+use void::Void;
+```
+
 ## Author
 
 [Jonathan Reem](https://medium.com/@jreem) is the primary author and maintainer of void.
