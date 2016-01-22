@@ -8,3 +8,8 @@ description = "The uninhabited void type for use in statically impossible cases.
 readme = "README.md"
 license = "MIT"
 
+[features]
+
+default = [ "std" ]
+std = []
+

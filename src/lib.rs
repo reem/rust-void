@@ -1,5 +1,6 @@
 #![cfg_attr(test, deny(warnings))]
 #![deny(missing_docs)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 //! # Void
 //!
@@ -10,7 +11,11 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
-use std::{fmt, cmp, error};
+extern crate core;
+use core::{fmt, cmp};
+
+#[cfg(feature = "std")]
+use std::error;
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
@@ -46,6 +51,7 @@ impl<T> cmp::PartialOrd<T> for Void {
     }
 }
 
+#[cfg(feature = "std")]
 impl error::Error for Void {
     fn description(&self) -> &str {
         unreachable(*self)
