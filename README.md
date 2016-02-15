@@ -2,7 +2,7 @@
 
 > The uninhabited void type for use in statically impossible cases.
 
-## Overview
+## [Documentation](https://crates.fyi/crates/void/1.0.0)
 
 The uninhabited type, `enum Void { }` is useful in dealing with cases you
 know to be impossible. For instance, if you are implementing a trait which
@@ -19,7 +19,7 @@ with the rest of your dependencies:
 
 ```toml
 [dependencies]
-void = "*"
+void = "1"
 ```
 
 Then, use `Void` in your crate:
