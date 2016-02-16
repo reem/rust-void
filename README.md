@@ -2,7 +2,7 @@
 
 > The uninhabited void type for use in statically impossible cases.
 
-## [Documentation](https://crates.fyi/crates/void/1.0.0)
+## [Documentation](https://crates.fyi/crates/void/1.0.1)
 
 The uninhabited type, `enum Void { }` is useful in dealing with cases you
 know to be impossible. For instance, if you are implementing a trait which
