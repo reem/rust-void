@@ -11,6 +11,7 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
+#[cfg(feature = "std")]
 extern crate core;
 use core::{fmt, cmp};
 

@@ -10,6 +10,6 @@ license = "MIT"
 
 [features]
 
-default = [ "std" ]
+default = ["std"]
 std = []
 
