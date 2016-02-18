@@ -11,12 +11,13 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
-#[cfg(feature = "std")]
-extern crate core;
+#[cfg(not(feature = "std"))]
 use core::{fmt, cmp};
 
 #[cfg(feature = "std")]
 use std::error;
+#[cfg(feature = "std")]
+use std::{fmt, cmp};
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
