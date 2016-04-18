@@ -11,12 +11,18 @@
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
 
-#[cfg(feature = "std")]
-extern crate core;
-use core::{fmt, cmp};
+#[cfg(not(feature = "std"))]
+mod coreprovider {
+    extern crate core;
+    pub use core::{fmt, cmp};
+}
 
 #[cfg(feature = "std")]
-use std::error;
+mod coreprovider {
+    pub use std::{fmt, cmp, error};
+}
+
+use coreprovider::*;
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
