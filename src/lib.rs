@@ -69,7 +69,7 @@ impl error::Error for Void {
     }
 }
 
-/// A safe version of `intrinsincs::unreachable`.
+/// A safe version of `intrinsics::unreachable`.
 ///
 /// If this typechecks, anything that causes this to run is unreachable code.
 ///
