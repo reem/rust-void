@@ -10,62 +10,61 @@
 //! This crate also comes ready with several extension traits for Result that add
 //! extra functionality to `Result<T, Void>` and `Result<Void, E>`.
 //!
+//! This can be aliased to core::convert::Infallible using the crates `infallible` feature.
+//!
 
-#[cfg(not(feature = "std"))]
-mod coreprovider {
-    extern crate core;
-    pub use core::{fmt, cmp};
-}
+/// The empty type for cases which can't occur (aliased to core::convert::Infallible)
+#[cfg(feature = "infallible")]
+pub type Void = core::convert::Infallible;
 
-#[cfg(feature = "std")]
-mod coreprovider {
-    pub use std::{fmt, cmp, error};
-}
+#[cfg(not(feature = "infallible"))]
+pub use void::Void;
 
-use coreprovider::*;
+#[cfg(not(feature = "infallible"))]
+mod void {
+    /// The empty type for cases which can't occur.
+    #[derive(Copy)]
+    pub enum Void { }
 
-/// The empty type for cases which can't occur.
-#[derive(Copy)]
-pub enum Void { }
-
-impl Clone for Void {
-    fn clone(&self) -> Void {
-        unreachable(*self)
-    }
-}
-
-impl fmt::Debug for Void {
-    fn fmt(&self, _: &mut fmt::Formatter) -> fmt::Result {
-        unreachable(*self)
-    }
-}
-
-impl fmt::Display for Void {
-    fn fmt(&self, _: &mut fmt::Formatter) -> fmt::Result {
-        unreachable(*self)
-    }
-}
-
-impl<T> cmp::PartialEq<T> for Void {
-    fn eq(&self, _: &T) -> bool {
-        unreachable(*self)
-    }
-}
-
-impl<T> cmp::PartialOrd<T> for Void {
-    fn partial_cmp(&self, _: &T) -> Option<cmp::Ordering> {
-        unreachable(*self)
-    }
-}
-
-#[cfg(feature = "std")]
-impl error::Error for Void {
-    fn description(&self) -> &str {
-        unreachable(*self)
+    impl Clone for Void {
+        fn clone(&self) -> Void {
+            super::unreachable(*self)
+        }
     }
 
-    fn cause(&self) -> Option<&error::Error> {
-        unreachable(*self)
+    impl core::fmt::Debug for Void {
+        fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+            super::unreachable(*self)
+        }
+    }
+
+    impl core::fmt::Display for Void {
+        fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+            super::unreachable(*self)
+        }
+    }
+
+    impl<T> core::cmp::PartialEq<T> for Void {
+        fn eq(&self, _: &T) -> bool {
+            super::unreachable(*self)
+        }
+    }
+
+    impl<T> core::cmp::PartialOrd<T> for Void {
+        fn partial_cmp(&self, _: &T) -> Option<core::cmp::Ordering> {
+            super::unreachable(*self)
+        }
+    }
+
+    #[cfg(feature = "std")]
+    impl std::error::Error for Void {
+        fn description(&self) -> &str {
+            super::unreachable(*self)
+        }
+
+        fn cause(&self) -> Option<&(dyn std::error::Error)> {
+            super::unreachable(*self)
+        }
     }
 }
 
