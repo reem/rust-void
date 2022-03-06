@@ -14,19 +14,19 @@
 #[cfg(not(feature = "std"))]
 mod coreprovider {
     extern crate core;
-    pub use core::{fmt, cmp};
+    pub use core::{cmp, fmt};
 }
 
 #[cfg(feature = "std")]
 mod coreprovider {
-    pub use std::{fmt, cmp, error};
+    pub use std::{cmp, error, fmt};
 }
 
 use coreprovider::*;
 
 /// The empty type for cases which can't occur.
 #[derive(Copy)]
-pub enum Void { }
+pub enum Void {}
 
 impl Clone for Void {
     fn clone(&self) -> Void {
@@ -64,7 +64,7 @@ impl error::Error for Void {
         unreachable(*self)
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         unreachable(*self)
     }
 }
@@ -95,7 +95,7 @@ impl<T> ResultVoidExt<T> for Result<T, Void> {
     fn void_unwrap(self) -> T {
         match self {
             Ok(val) => val,
-            Err(e) => unreachable(e)
+            Err(e) => unreachable(e),
         }
     }
 }
@@ -114,8 +114,7 @@ impl<E> ResultVoidErrExt<E> for Result<Void, E> {
     fn void_unwrap_err(self) -> E {
         match self {
             Ok(v) => unreachable(v),
-            Err(e) => e
+            Err(e) => e,
         }
     }
 }
-
