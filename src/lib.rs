@@ -58,6 +58,18 @@ impl<T> cmp::PartialOrd<T> for Void {
     }
 }
 
+impl<T> AsRef<T> for Void {
+    fn as_ref(&self) -> &T {
+        unreachable(*self)
+    }
+}
+
+impl<T> AsMut<T> for Void {
+    fn as_mut(&mut self) -> &mut T {
+        unreachable(*self)
+    }
+}
+
 #[cfg(feature = "std")]
 impl error::Error for Void {
     fn description(&self) -> &str {
